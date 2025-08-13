@@ -13,6 +13,9 @@ export default defineNuxtConfig({
   css: ["./app/assets/css/main.css"],
   devtools: { enabled: true },
   modules: ["@nuxt/ui"],
+  nitro: {
+    buildDir: "dist"
+  },
   pages: true,
   vite: {
     plugins: [tailwindcss()],

@@ -1,0 +1,152 @@
+export default function template({
+  subject,
+  html,
+}: {
+  subject?: string;
+  html: string;
+}) {
+  return `<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>E.K. Murray</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        background-color: rgb(235, 235, 235);
+        padding: 2rem 0;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      main {
+        margin: auto;
+        width: 95dvw;
+        max-width: 680px;
+        border: 1px solid rgb(181, 181, 181);
+        padding: 1rem;
+      }
+
+      header {
+        background-color: #dfdfdf;
+        padding: 5px;
+      }
+
+      footer {
+        margin: auto;
+        width: 95dvw;
+        max-width: 680px;
+        padding: 1rem;
+        text-align: center;
+        color: #535353;
+        font-size: smaller;
+      }
+
+      .logo {
+        border-radius: 999px;
+      }
+
+      .subject {
+        font-size: 28px;
+        margin: auto;
+        width: fit-content;
+        padding: 10px;
+        color: #303030;
+      }
+      .main {
+        margin: 24px 0;
+      }
+
+      .design {
+        display: table;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <img
+          class="logo"
+          src="https://eileenkatherinemurray.com/logo.png"
+          alt="Logo"
+          width="50" />
+      </header>
+
+      ${
+        subject
+          ? `<div style="margin-top: 20px;">
+        <h1 class="subject">${subject}</h1>
+      </div>`
+          : ""
+      }
+
+      <section class="main">${html}</section>
+
+      <div
+        class="design"
+        style="margin-top: 40px; width: 100%; border-collapse: collapse">
+        <table
+          border="0"
+          cellpadding="0"
+          cellspacing="0"
+          width="100%"
+          style="border-collapse: collapse">
+          <tr>
+            <!-- Left column -->
+            <td valign="top" style="padding-right: 20px; width: 30%">
+              <img
+                src="https://eileenkatherinemurray.com/assets/eileen-1.jpg"
+                alt="E.K. Murray"
+                width="100%"
+                style="
+                  min-height: 80px;
+                  border-radius: 5px;
+                  object-fit: cover;
+                " />
+            </td>
+
+            <!-- Separator -->
+            <td valign="top" style="width: 1px; background-color: #ccc"></td>
+
+            <!-- Right column -->
+            <td valign="top" style="padding-left: 20px; width: 69.8%">
+              <p
+                class="name"
+                style="
+                  margin: 0;
+                  font-size: x-large;
+                  color: rgb(202, 13, 92);
+                  font-weight: bold;
+                ">
+                Eileen Katherine Murray
+              </p>
+              <p style="margin: 0; color: #535353; font-size: smaller">
+                Financial Consultant | Stock Broker | Investment Analyst |
+                Digital Assets Manager
+              </p>
+              <a
+                href="https://brokercheck.finra.org/individual/summary/1377604"
+                target="_blank"
+                rel="noopener"
+                style="display: block; margin-top: 10px">
+                <img
+                  src="https://brokercheck.finra.org/assets/images/bc_logo_large.png"
+                  alt="broker check finra"
+                  width="120px" />
+              </a>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </main>
+
+    <footer>&copy; 2012 Eileen Katherine Murray. All Rights Reserved</footer>
+  </body>
+</html>
+`;
+}

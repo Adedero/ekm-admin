@@ -1,0 +1,147 @@
+<script setup lang="ts">
+import { v4 as uuid } from "uuid";
+import {
+  EMAIL_ATTACHMENT_ACCEPT,
+  EMAIL_FILES_ALLOWED_EXTENSIONS,
+  EMAIL_MAX_FILE_SIZE,
+  EMAIL_MAX_FILES,
+} from "~~/shared/constants";
+import { useAsyncState } from "@vueuse/core";
+
+export interface IFile {
+  id: string;
+  dataUrl: string;
+  fileData: File;
+}
+
+const toast = useToast();
+const emit = defineEmits<{
+  select: [files: IFile[]];
+  cancel: [];
+}>();
+
+const id = uuid();
+const files = ref<IFile[] | null>(null);
+//const tempFiles = ref<Array<Omit<IFile, "dataUrl">> | null>(null);
+
+const { error, execute, state } = useAsyncState(uploadPromise, null, {
+  immediate: false,
+});
+
+async function uploadPromise(event: Event): Promise<IFile[] | null> {
+  const target = event.target as HTMLInputElement;
+  const uploadedFiles = target?.files;
+  if (!uploadedFiles) {
+    throw new Error("No files selected.");
+  }
+
+  files.value = Array.from(uploadedFiles).map((file) => ({
+    fileData: file,
+    id: uuid(),
+    dataUrl: "",
+  }));
+
+  if (files.value.length > EMAIL_MAX_FILES) {
+    throw new Error(
+      `Only a maximum of ${EMAIL_MAX_FILES} files can be uploaded.`
+    );
+  }
+
+  const isFormatValid = files.value.every((file) => {
+    const accept = EMAIL_ATTACHMENT_ACCEPT.replace(/\s+/g, "").split(",");
+    const fileType = file.fileData.type;
+    const fileExtension =
+      file.fileData.name?.split(".")?.pop()?.toLowerCase() ?? "";
+
+    return (
+      accept.includes(fileType) ||
+      EMAIL_FILES_ALLOWED_EXTENSIONS.includes(fileExtension)
+    );
+  });
+
+  if (!isFormatValid) {
+    files.value = null;
+    throw new Error("File format is not allowed.");
+  }
+
+  const formattedSize = formatFileSize(EMAIL_MAX_FILE_SIZE);
+  const isSizeValid = files.value.every(
+    (file) => file.fileData.size <= EMAIL_MAX_FILE_SIZE
+  );
+
+  if (!isSizeValid) {
+    files.value = null;
+    throw new Error(`File size exceeds the ${formattedSize} limit.`);
+  }
+
+  for await (const file of files.value) {
+    if (!file.id) file.id = uuid();
+
+    const reader = new FileReader();
+
+    file.dataUrl = await new Promise<string>((resolve, reject) => {
+      reader.readAsDataURL(file.fileData);
+      reader.onload = (event: ProgressEvent<FileReader>) => {
+        resolve(event.target?.result as string);
+      };
+      reader.onerror = () => {
+        reject(new Error("File reading failed"));
+      };
+    });
+  }
+
+  return files.value.filter((file) => file.dataUrl.length > 0);
+}
+
+async function handleSelect(event: Event) {
+  await execute(0, event);
+  if (error.value || !state.value) {
+    const detail =
+      error.value instanceof Error ? error.value.message : String(error.value);
+    toast.add({ color: "error", title: "Error", description: detail });
+    return;
+  }
+  emit("select", state.value!);
+}
+
+function formatFileSize(bytes: number): string {
+  const units = ["Bytes", "KB", "MB", "GB", "TB", "PB"];
+  let unitIndex = 0;
+  let fileSize = bytes;
+
+  while (fileSize >= 1024 && unitIndex < units.length - 1) {
+    fileSize /= 1024;
+    unitIndex++;
+  }
+
+  return `${fileSize.toFixed(1)} ${units[unitIndex]}`;
+}
+
+function handleCancel() {
+  files.value = null;
+  emit("cancel");
+}
+
+onUnmounted(() => {
+  handleCancel();
+});
+</script>
+
+<template>
+  <div>
+    <input
+      @input="handleSelect"
+      @cancel="handleCancel"
+      type="file"
+      :accept="EMAIL_ATTACHMENT_ACCEPT"
+      multiple
+      :id="id"
+      style="display: none" />
+    <label :for="id" class="cursor-pointer *:pointer-events-none">
+      <slot>
+        <NuxtButton icon="lucide:paperclip" variant="outline" />
+      </slot>
+    </label>
+  </div>
+</template>
+`

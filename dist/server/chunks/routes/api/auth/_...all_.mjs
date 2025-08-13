@@ -1,7 +1,6 @@
 import { d as defineEventHandler, t as toWebRequest } from '../../../nitro/nitro.mjs';
 import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
-import { config } from 'dotenv';
 import { drizzle } from 'drizzle-orm/libsql';
 import { s as sendMail } from '../../../_/email.mjs';
 import { sqliteTable, integer, text } from 'drizzle-orm/sqlite-core';
@@ -19,7 +18,6 @@ import '@iconify/utils';
 import 'consola';
 import 'nodemailer';
 
-config({ debug: false });
 const db = drizzle(process.env.DB_FILE_NAME);
 
 const user = sqliteTable("user", {

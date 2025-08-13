@@ -46,7 +46,6 @@
     "defu": "6.1.4",
     "detect-libc": "2.0.2",
     "devalue": "5.1.1",
-    "dotenv": "17.2.1",
     "drizzle-orm": "0.44.4",
     "entities": "4.5.0",
     "estree-walker": "2.0.2",

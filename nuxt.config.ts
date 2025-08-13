@@ -14,7 +14,9 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: ["@nuxt/ui"],
   nitro: {
-    buildDir: "dist"
+    output: {
+      dir: "dist"
+    }
   },
   pages: true,
   vite: {

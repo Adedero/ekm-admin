@@ -652,6 +652,16 @@ const validate = /* @__PURE__ */ defineNuxtRouteMiddleware(async (to, from) => {
   });
   return error;
 });
+const redirect_45global = /* @__PURE__ */ defineNuxtRouteMiddleware((to) => {
+  const blockedRouteNames = [
+    "register",
+    "email-verification",
+    "token-validation"
+  ];
+  if (to.name && blockedRouteNames.includes(to.name.toString())) {
+    return navigateTo("/");
+  }
+});
 const manifest_45route_45rule = /* @__PURE__ */ defineNuxtRouteMiddleware(async (to) => {
   {
     return;
@@ -659,6 +669,7 @@ const manifest_45route_45rule = /* @__PURE__ */ defineNuxtRouteMiddleware(async 
 });
 const globalMiddleware = [
   validate,
+  redirect_45global,
   manifest_45route_45rule
 ];
 const namedMiddleware = {

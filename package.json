@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@iconify-json/lucide": "^1.2.62",
+    "@iconify/utils": "^3.0.1",
     "@libsql/client": "^0.15.10",
     "@nuxt/ui": "^3.3.0",
     "@tailwindcss/vite": "^4.1.11",

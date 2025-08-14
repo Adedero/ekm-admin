@@ -6,12 +6,12 @@ const emailAccounts: Array<{
   transportName: TransportName;
 }> = [
   {
-    name: "E.K. Murray - Contact",
+    name: "Eileen Katherine Murray CFA",
     address: "contact@eileenkatherinemurray.com",
     transportName: "contact",
   },
   {
-    name: "E.K. Murray - Finance",
+    name: "Finance & Records | Eileen K. Murray Advisory",
     address: "finance@eileenkatherinemurray.com",
     transportName: "finance",
   },

@@ -11,7 +11,7 @@
     "@floating-ui/dom": "1.7.3",
     "@floating-ui/utils": "0.2.10",
     "@floating-ui/vue": "1.1.8",
-    "@iconify/utils": "2.3.0",
+    "@iconify/utils": "3.0.1",
     "@iconify/vue": "5.0.0",
     "@internationalized/date": "3.8.2",
     "@internationalized/number": "3.6.4",

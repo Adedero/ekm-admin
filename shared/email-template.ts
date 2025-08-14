@@ -129,16 +129,11 @@ export default function template({
                 Financial Consultant | Stock Broker | Investment Analyst |
                 Digital Assets Manager
               </p>
-              <a
-                href="https://brokercheck.finra.org/individual/summary/1377604"
-                target="_blank"
-                rel="noopener"
-                style="display: block; margin-top: 10px">
-                <img
-                  src="https://brokercheck.finra.org/assets/images/bc_logo_large.png"
-                  alt="broker check finra"
-                  width="120px" />
-              </a>
+              <img
+                src="https://brokercheck.finra.org/assets/images/bc_logo_large.png"
+                alt="broker check finra"
+                style="margin-top: 10px"
+                width="120px" />
             </td>
           </tr>
         </table>

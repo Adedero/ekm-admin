@@ -1,0 +1,1 @@
+import{cU as o,cV as r,ax as i}from"./CwPaj6Lc.js";import{a as n}from"./BPtl1fjW.js";import{u}from"./BCuoMx0o.js";const l=o(async c=>{let t,s;const e=([t,s]=r(()=>n.getSession()),t=await t,s(),t);if(!e.data)return i("/login");const a=u();a.setUser(e.data.user),a.setSession(e.data.session)});export{l as default};
